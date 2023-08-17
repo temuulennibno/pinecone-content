@@ -74,11 +74,7 @@
       .links a:hover {
         opacity: 1;
       }
-      .links a.no:hover {
-        opacity: 0;
-        cursor: not-allowed;
-      }
-      .links a.yes:hover {
+      .links a:hover {
         color: #18ba51;
       }
     </style>
@@ -86,9 +82,8 @@
   <body>
     <h1 class="typewrite" data-speed="150" data-period="2000" data-type='["Орой дота тоглох уу?"]'></h1>
     <div class="links">
-      <h5>Сонголтоо хийнэ үү</h5>
-      <a href="javascript:void(0)" class="yes">Тийм</a>
-      <a href="javascript:void(0)" class="no">Үгүй</a>
+      <a href="javascript:window.alert('Баярлалаа :*')" class="yes">Тийм</a>
+      <a href="javascript:window.alert('Баярлалаа :*')" class="no">Үгүй</a>
     </div>
 
     <script>
@@ -132,6 +127,17 @@
         }
         setTimeout(() => this.tick(), delta);
       };
+      const noBtn = document.querySelectorAll(".no")[0];
+      const yesBtn = document.querySelectorAll(".yes")[0];
+
+      document.querySelectorAll(".no")[0].addEventListener("mouseover", function (event) {
+        this.innerHTML = "Тийм";
+        yesBtn.innerHTML = "Үгүй";
+      });
+      document.querySelectorAll(".no")[0].addEventListener("mouseout", function (event) {
+        this.innerHTML = "Үгүй";
+        yesBtn.innerHTML = "Тийм";
+      });
     </script>
   </body>
 </html>
