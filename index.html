@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet" />
+    <title>Document</title>
+    <style>
+      *,
+      *:after,
+      *:before {
+        box-sizing: inherit;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      html {
+        box-sizing: border-box;
+        font-size: 62.5%;
+      }
+      body {
+        display: flex;
+        flex-direction: row;
+        transform: translateY(-10%);
+        align-items: center;
+        justify-content: center;
+        max-width: 50rem;
+        margin: 0 auto;
+        padding: 2rem;
+        font-weight: 300;
+        background-color: #111;
+        color: #fff;
+
+        font-family: "Roboto Condensed", sans-serif;
+        font-weight: 300;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 4rem;
+        letter-spacing: 0.1rem;
+        user-select: none;
+        text-transform: uppercase;
+      }
+
+      .typewrite > span.wrap::after {
+        content: "|";
+        color: #f61;
+      }
+      .links {
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: 70%;
+        transform: translate(-50%, -50%);
+      }
+      .links a {
+        margin: 0 20px;
+        font-size: 32px;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: #fff;
+        cursor: pointer;
+        transition: 0.2s all;
+        opacity: 0.8;
+      }
+      .links h5 {
+        font-size: 48px;
+      }
+      .links a:hover {
+        opacity: 1;
+      }
+      .links a.no:hover {
+        opacity: 0;
+        cursor: not-allowed;
+      }
+      .links a.yes:hover {
+        color: #18ba51;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="typewrite" data-speed="150" data-period="2000" data-type='["Хайраа намайг уучлаарай ♥"]'></h1>
+    <div class="links">
+      <h5>Уучлах уу?</h5>
+      <a href="javascript:void(0)" class="yes">Тийм</a>
+      <a href="javascript:void(0)" class="no">Үгүй</a>
+    </div>
+
+    <script>
+      window.onload = function () {
+        let elements = document.getElementsByClassName("typewrite");
+        for (let i = 0; i < elements.length; ++i) {
+          let messages = elements[i].getAttribute("data-type");
+          let speed = elements[i].getAttribute("data-speed");
+          let period = elements[i].getAttribute("data-period");
+          if (messages) new Typewriter(elements[i], JSON.parse(messages), speed, period);
+        }
+      };
+
+      function Typewriter(el, messages, speed, period) {
+        this.el = el;
+        this.messages = messages;
+        this.speed = parseInt(speed, 10) || 200;
+        this.period = parseInt(period, 10) || 2000;
+        this.txt = "";
+        this.loops = 0;
+        this.isClearing = false;
+        this.tick();
+      }
+
+      Typewriter.prototype.tick = function () {
+        let msg = this.messages[this.loops % this.messages.length];
+        let edge = this.isClearing ? this.txt.length - 1 : this.txt.length + 1;
+        this.txt = msg.substring(0, edge);
+        this.el.innerHTML = '<span class="wrap">' + this.txt + "</span>";
+
+        var delta = this.speed / 2 + Math.random() * this.speed;
+        if (this.isClearing) delta /= 2;
+
+        if (!this.isClearing && this.txt === msg) {
+          this.isClearing = true;
+          delta = this.period;
+        } else if (this.isClearing && this.txt === "") {
+          this.loops++;
+          this.isClearing = false;
+          delta = this.period / 2;
+        }
+        setTimeout(() => this.tick(), delta);
+      };
+    </script>
+  </body>
+</html>
